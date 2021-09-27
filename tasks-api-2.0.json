@@ -1,0 +1,278 @@
+{
+  "swagger": "2.0",
+  "host": "serco-i-task-api-3scale-apicast-production.apps.cluster-rjqjn.rjqjn.sandbox241.opentlc.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "definitions": {
+    "Task": {
+      "description": "",
+      "required": [
+        "id",
+        "task"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "format": "int64",
+          "title": "Task ID",
+          "description": "Unique task identifier",
+          "type": "integer"
+        },
+        "task": {
+          "title": "The task",
+          "description": "Task line",
+          "type": "string"
+        },
+        "completed": {
+          "title": "Task completition status",
+          "description": "0 - ongoing, 1 - completed",
+          "maximum": 1,
+          "minimum": 0,
+          "type": "integer"
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "Todo App API",
+    "version": "1.0.0",
+    "description": "Example Todo Application API",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
+    }
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/": {
+      "get": {
+        "tags": [
+          "tasks"
+        ],
+        "responses": {
+          "200": {
+            "description": "All is good",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Task"
+              }
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "operationId": "fetch-all-tasks",
+        "summary": "List all tasks",
+        "description": "Fetches all tasks from the database",
+        "parameters": [
+          {
+            "name": "user_key",
+            "in": "query",
+            "description": "Your API access key",
+            "required": true,
+            "x-data-threescale-name": "user_keys",
+            "type": "string"
+          }
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "post": {
+        "tags": [
+          "tasks"
+        ],
+        "responses": {
+          "201": {
+            "description": "All is good",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "operationId": "create-task",
+        "summary": "Create new task",
+        "description": "Stores new task in the database",
+        "parameters": [
+          {
+            "description": "Task to create",
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          },
+          {
+            "name": "user_key",
+            "in": "query",
+            "description": "Your API access key",
+            "required": true,
+            "x-data-threescale-name": "user_keys",
+            "type": "string"
+          }
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      }
+    },
+    "/{id}": {
+      "get": {
+        "tags": [
+          "tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Task identifier",
+            "in": "path",
+            "required": true,
+            "format": "int64",
+            "type": "integer"
+          },
+          {
+            "name": "user_key",
+            "in": "query",
+            "description": "Your API access key",
+            "required": true,
+            "x-data-threescale-name": "user_keys",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is good",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "404": {
+            "description": "No task with provided identifier found"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "operationId": "fetch-task",
+        "description": "Fetches task by given identifier",
+        "produces": [
+          "application/json"
+        ]
+      },
+      "put": {
+        "tags": [
+          "tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Task identifier",
+            "in": "path",
+            "required": true,
+            "format": "int64",
+            "type": "integer"
+          },
+          {
+            "description": "Task with updates",
+            "required": true,
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          },
+          {
+            "name": "user_key",
+            "in": "query",
+            "description": "Your API access key",
+            "required": true,
+            "x-data-threescale-name": "user_keys",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "All is good",
+            "schema": {
+              "$ref": "#/definitions/Task"
+            }
+          },
+          "404": {
+            "description": "No Record with this ID"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "operationId": "update-task",
+        "summary": "Update task",
+        "description": "Updates task by given identifier",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ]
+      },
+      "delete": {
+        "tags": [
+          "tasks"
+        ],
+        "parameters": [
+          {
+            "name": "id",
+            "description": "Task identifier to delete",
+            "in": "path",
+            "required": true,
+            "format": "int64",
+            "type": "integer"
+          },
+          {
+            "name": "user_key",
+            "in": "query",
+            "description": "Your API access key",
+            "required": true,
+            "x-data-threescale-name": "user_keys",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Task deleted"
+          },
+          "404": {
+            "description": "No Record found with this ID"
+          },
+          "500": {
+            "description": "Server Error"
+          }
+        },
+        "operationId": "delete-task",
+        "summary": "Delete task",
+        "description": "Deletes task by given identifier"
+      }
+    }
+  },
+  "securityDefinitions": {
+    "username_password": {
+      "type": "basic"
+    }
+  },
+  "x-components": {}
+}

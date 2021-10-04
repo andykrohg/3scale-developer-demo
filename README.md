@@ -6,7 +6,7 @@
   ```
 * Create a RWO PVC for system storage (otherwise the operator will try to create a RWX one)
   ```bash
-  oc apply -f threescale-storagee.yml
+  oc apply -f threescale-storage.yml
   ```
 * Create an `APIManager`, being sure to pass the `apps.openshift.example.com` value from your cluster to the  `wildcardDomain` attribute.
 
@@ -14,6 +14,7 @@
   ```bash
   oc adm policy add-cluster-role-to-user view system:serviceaccount:threescale:amp
   ```
+  > NOTE: Your OpenShift user must also have view access to projects where services are hosted.
 
 ### Patch the Content in the Developer Portal
 Follow the steps described [here](https://github.com/andykrohg/3scale-discover-APIs/blob/master/doc/apis.json.md)

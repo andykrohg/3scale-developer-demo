@@ -1,6 +1,6 @@
 {
   "swagger": "2.0",
-  "host": "demo-i-task-api-3scale-apicast-production.apps.cluster-bfkwz.bfkwz.sandbox1824.opentlc.com",
+  "host": "demo-i-task-api-3scale-apicast-production.apps.REPLACEME.com",
   "basePath": "/",
   "schemes": [
     "https"
